@@ -862,7 +862,11 @@
       "Allez Vadimousse, t’es un champion !",
       "Don Badimousse, c’est toi le meilleur !",
       "Vadimousse, tu vas réussir, je crois en toi !",
-      "T’es super fort, mon garçon !"
+      "T’es super fort, mon garçon !",
+      "Vas-y petit bonhomme t'es une star !",
+      "Six seven - six seven !",
+      "Eh ouais mec, allez hop on perd pas le fil !";
+      "On reste concentré on met pas son doigt dans son nez"
     ];
 
     const encouragement = randomEncouragement[Math.floor(Math.random() * randomEncouragement.length)];
@@ -876,7 +880,7 @@
         </div>
         <div class="question-text">
           ${questionType === 'base' ? 
-            `Quelle est la base verbale de "${question.fr}" ?` :
+            `Quelle est l'infinitif de "${question.fr}" ?` :
             questionType === 'past' ? 
             `Quel est le prétérit de "${question.fr}" ?` :
             `Quel est le participe passé de "${question.fr}" ?`}
@@ -1129,3 +1133,4 @@
 
 </body>
 </html>
+
