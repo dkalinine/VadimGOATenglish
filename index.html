@@ -314,11 +314,6 @@
       border-color: var(--accent);
     }
 
-    .option-letter {
-      font-weight: bold;
-      min-width: 24px;
-    }
-
     .feedback {
       margin-top: 15px;
       padding: 15px;
@@ -572,9 +567,9 @@
 
   <div class="dashboard">
     <div class="user-info">
-      <div class="user-avatar">U</div>
+      <div class="user-avatar">V</div>
       <div>
-        <div><strong>Utilisateur</strong></div>
+        <div><strong>Vadim</strong></div>
         <div style="font-size: 0.9rem;">Connecté</div>
       </div>
     </div>
@@ -863,6 +858,15 @@
       'base': 'Base verbale'
     };
     
+    const randomEncouragement = [
+      "Allez Vadimousse, t’es un champion !",
+      "Don Badimousse, c’est toi le meilleur !",
+      "Vadimousse, tu vas réussir, je crois en toi !",
+      "T’es super fort, mon garçon !"
+    ];
+
+    const encouragement = randomEncouragement[Math.floor(Math.random() * randomEncouragement.length)];
+
     const container = document.getElementById("quiz-container");
     container.innerHTML = `
       <div class="question">
@@ -877,6 +881,7 @@
             `Quel est le prétérit de "${question.fr}" ?` :
             `Quel est le participe passé de "${question.fr}" ?`}
         </div>
+        <p style="margin-top: 10px; font-style: italic; color: #4a90e2;">${encouragement}</p>
         ${mode !== 'training' ? `
         <div class="timer-bar">
           <div class="timer-progress"></div>
@@ -913,7 +918,8 @@
     feedbackDiv.className = `feedback ${selected === correct ? 'correct' : 'incorrect'}`;
     feedbackDiv.innerHTML = selected === correct ? 
       '<i class="fas fa-check-circle"></i> Correct !' : 
-      `<i class="fas fa-times-circle"></i> Incorrect ! La bonne réponse était : ${correct}`;
+      `<i class="fas fa-times-circle"></i> Incorrect ! La bonne réponse était : ${correct}<br>
+       <small>Allez Vadimousse, on recommence !</small>`;
     element.parentElement.appendChild(feedbackDiv);
 
     const questionTime = mode === 'training' ? 0 : 15 - timeLeft;
@@ -949,11 +955,23 @@
   function showScore() {
     clearInterval(timerInterval);
     const container = document.getElementById("quiz-container");
+
+    let message = "";
+    if (score >= 18) {
+      message = "🎉 C’est bien mon fils, t’es un champion ! Tu es le vrai Vadimousse !";
+    } else if (score >= 15) {
+      message = "👏 Tu as bien fait, Vadimousse ! Tu es déjà un pro du verbe irrégulier !";
+    } else if (score >= 10) {
+      message = "😊 Pas mal, mon petit Vadimousse ! Continue comme ça, tu vas y arriver !";
+    } else {
+      message = "💪 Don Badimousse, tu vas y arriver, faut juste bosser un peu plus !";
+    }
+
     container.innerHTML = `
       <div class="results">
         <h2><i class="fas fa-trophy"></i> Quiz Terminé !</h2>
         <div class="score-display">${score}/${totalQuestions}</div>
-        <p>Vous avez répondu correctement à ${score} question(s).</p>
+        <p>${message}</p>
         <p>Temps moyen par question : ${(questionTimes.length > 0 ? 
           (questionTimes.reduce((a, b) => a + b, 0) / questionTimes.length).toFixed(1) : 0)} secondes</p>
       </div>
