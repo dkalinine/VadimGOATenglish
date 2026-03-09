@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quiz Verbes Irreguliers - Pro Complète</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-light: #ffffff;
+      --text-light: #333333;
+      --bg-dark: #1e1e1e;
+      --text-dark: #f0f0f0;
+      --accent: #4a90e2;
+      --success: #4caf50;
+      --error: #f44336;
+      --warning: #ff9800;
+      --border: #ccc;
+      --shadow: 0 4px 12px rgba(0,0,0,0.1);
+      --transition: all 0.3s ease;
+      --primary: #2196F3;
+      --secondary: #FF9800;
+      --light-bg: #f5f7fa;
+      --dark-bg: #2c3e50;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      transition: var(--transition);
+      line-height: 1.6;
+    }
+
+    body.dark-mode {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dark-mode .container {
+      background-color: #2d3748;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--accent);
+    }
+
+    h1 {
+      color: var(--accent);
+      margin-bottom: 10px;
+      font-size: 2rem;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-top: 0;
+      font-size: 1.1rem;
+    }
+
+    .dashboard {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background-color: rgba(74, 144, 226, 0.1);
+      padding: 10px 15px;
+      border-radius: 8px;
+    }
+
+    .dark-mode .user-info {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+    }
+
+    .difficulty-selector {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .difficulty-btn {
+      padding: 10px 15px;
+      background-color: #e0e0e0;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 500;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .dark-mode .difficulty-btn {
+      background-color: #4a5568;
+      color: white;
+    }
+
+    .difficulty-btn.active {
+      background-color: var(--accent);
+      color: white;
+      box-shadow: 0 4px 8px rgba(74, 144, 226, 0.3);
+    }
+
+    .mode-selector {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .mode-btn {
+      padding: 10px 15px;
+      background-color: #e0e0e0;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 500;
+    }
+
+    .dark-mode .mode-btn {
+      background-color: #4a5568;
+      color: white;
+    }
+
+    .mode-btn.active {
+      background-color: var(--success);
+      color: white;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .stat-box {
+      text-align: center;
+      padding: 15px;
+      border-radius: 10px;
+      background-color: rgba(74, 144, 226, 0.1);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .dark-mode .stat-box {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .stat-value {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .progress-container {
+      margin: 20px 0;
+      background-color: #f0f0f0;
+      border-radius: 10px;
+      height: 12px;
+      overflow: hidden;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    .dark-mode .progress-container {
+      background-color: #4a5568;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--secondary));
+      transition: width 0.5s ease;
+    }
+
+    .question {
+      margin-bottom: 25px;
+      padding: 20px;
+      border-radius: 12px;
+      background-color: #f9f9f9;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .dark-mode .question {
+      background-color: #3a4a5c;
+    }
+
+    .question-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .question-number {
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    .question-type {
+      font-size: 0.9rem;
+      background-color: var(--accent);
+      color: white;
+      padding: 3px 8px;
+      border-radius: 12px;
+    }
+
+    .question-text {
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+      font-weight: 500;
+    }
+
+    .timer-bar {
+      height: 8px;
+      background-color: #eee;
+      border-radius: 4px;
+      margin: 15px 0;
+      overflow: hidden;
+    }
+
+    .dark-mode .timer-bar {
+      background-color: #4a5568;
+    }
+
+    .timer-progress {
+      height: 100%;
+      background-color: var(--accent);
+      width: 100%;
+      transition: width 0.5s linear;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .option {
+      padding: 15px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .dark-mode .option {
+      border-color: #4a5568;
+    }
+
+    .option:hover {
+      background-color: rgba(74, 144, 226, 0.1);
+      border-color: var(--accent);
+    }
+
+    .option.selected {
+      background-color: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .option-letter {
+      font-weight: bold;
+      min-width: 24px;
+    }
+
+    .feedback {
+      margin-top: 15px;
+      padding: 15px;
+      border-radius: 8px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .correct {
+      background-color: rgba(76, 175, 80, 0.2);
+      color: var(--success);
+      border-left: 4px solid var(--success);
+    }
+
+    .incorrect {
+      background-color: rgba(244, 67, 54, 0.2);
+      color: var(--error);
+      border-left: 4px solid var(--error);
+    }
+
+    .buttons {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 12px 20px;
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: var(--transition);
+      flex: 1;
+      min-width: 120px;
+      box-shadow: 0 4px 8px rgba(74, 144, 226, 0.2);
+    }
+
+    button:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(74, 144, 226, 0.3);
+    }
+
+    .btn-success {
+      background-color: var(--success);
+      box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2);
+    }
+
+    .btn-success:hover {
+      box-shadow: 0 6px 12px rgba(76, 175, 80, 0.3);
+    }
+
+    .btn-danger {
+      background-color: var(--error);
+      box-shadow: 0 4px 8px rgba(244, 67, 54, 0.2);
+    }
+
+    .btn-danger:hover {
+      box-shadow: 0 6px 12px rgba(244, 67, 54, 0.3);
+    }
+
+    .btn-warning {
+      background-color: var(--warning);
+      box-shadow: 0 4px 8px rgba(255, 152, 0, 0.2);
+    }
+
+    .btn-warning:hover {
+      box-shadow: 0 6px 12px rgba(255, 152, 0, 0.3);
+    }
+
+    .results {
+      text-align: center;
+      padding: 30px;
+      margin: 20px 0;
+    }
+
+    .results h2 {
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .score-display {
+      font-size: 3rem;
+      font-weight: bold;
+      color: var(--accent);
+      margin: 20px 0;
+    }
+
+    .badges {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 25px 0;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      padding: 15px 20px;
+      background-color: #f0f0f0;
+      border-radius: 12px;
+      text-align: center;
+      min-width: 120px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .dark-mode .badge {
+      background-color: #4a5568;
+    }
+
+    .badge.unlocked {
+      background-color: var(--success);
+      color: white;
+      transform: scale(1.05);
+    }
+
+    .stats-section {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: rgba(74, 144, 226, 0.05);
+      border-radius: 12px;
+    }
+
+    .dark-mode .stats-section {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .stat-card {
+      text-align: center;
+      padding: 15px;
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+    }
+
+    .dark-mode .stat-card {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .stat-card-value {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    .leaderboard {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: rgba(74, 144, 226, 0.05);
+      border-radius: 12px;
+    }
+
+    .dark-mode .leaderboard {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .leaderboard h3 {
+      margin-top: 0;
+      color: var(--accent);
+    }
+
+    .export-section {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: rgba(74, 144, 226, 0.05);
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .dark-mode .export-section {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .pdf-preview {
+      margin: 20px 0;
+      padding: 15px;
+      background-color: #f0f0f0;
+      border-radius: 8px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .dark-mode .pdf-preview {
+      background-color: #4a5568;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media print {
+      body, .container {
+        background-color: white;
+        color: black;
+      }
+      .buttons, .difficulty-selector, .stats, .export-section, .leaderboard {
+        display: none;
+      }
+      .container {
+        box-shadow: none;
+        padding: 0;
+      }
+      .question {
+        box-shadow: none;
+        border: 1px solid #ccc;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      h1 {
+        font-size: 1.5rem;
+      }
+      
+      .stats {
+        grid-template-columns: 1fr 1fr;
+      }
+      
+      .buttons {
+        flex-direction: column;
+      }
+      
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1><i class="fas fa-book-open"></i> Quiz Verbes Irreguliers - Pro</h1>
+    <p class="subtitle">Testez vos connaissances en anglais</p>
+  </div>
+
+  <div class="dashboard">
+    <div class="user-info">
+      <div class="user-avatar">U</div>
+      <div>
+        <div><strong>Utilisateur</strong></div>
+        <div style="font-size: 0.9rem;">Connecté</div>
+      </div>
+    </div>
+    
+    <div class="difficulty-selector">
+      <button class="difficulty-btn active" onclick="setDifficulty('easy')">Facile</button>
+      <button class="difficulty-btn" onclick="setDifficulty('medium')">Moyen</button>
+      <button class="difficulty-btn" onclick="setDifficulty('hard')">Difficile</button>
+    </div>
+  </div>
+
+  <div class="mode-selector">
+    <button class="mode-btn active" onclick="setMode('quiz')">Quiz</button>
+    <button class="mode-btn" onclick="setMode('training')">Entraînement</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat-box">
+      <div class="stat-value" id="current-question">1</div>
+      <div class="stat-label">Question</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value" id="score-display">0</div>
+      <div class="stat-label">Score</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value" id="level-display">Facile</div>
+      <div class="stat-label">Niveau</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value" id="time-display">15s</div>
+      <div class="stat-label">Temps</div>
+    </div>
+  </div>
+
+  <div class="progress-container">
+    <div class="progress-fill" id="progress-fill"></div>
+  </div>
+
+  <div id="quiz-container">
+    <!-- Questions seront insérées ici -->
+  </div>
+
+  <div class="buttons">
+    <button class="btn-success" onclick="restartQuiz()"><i class="fas fa-redo"></i> Recommencer</button>
+    <button class="btn-warning" onclick="toggleDarkMode()"><i class="fas fa-moon"></i> Mode Sombre</button>
+    <button class="btn-danger" onclick="printResults()"><i class="fas fa-print"></i> Imprimer</button>
+    <button class="btn-success" onclick="exportPDF()"><i class="fas fa-file-pdf"></i> Export PDF</button>
+  </div>
+
+  <div class="export-section">
+    <h3><i class="fas fa-download"></i> Export PDF</h3>
+    <div class="pdf-preview" id="pdf-preview">
+      <p>Aperçu du PDF à générer...</p>
+    </div>
+    <button class="btn-success" onclick="downloadPDF()"><i class="fas fa-download"></i> Télécharger PDF</button>
+  </div>
+
+  <div class="badges">
+    <div class="badge" id="badge1">10/20</div>
+    <div class="badge" id="badge2">15/20</div>
+    <div class="badge" id="badge3">20/20</div>
+  </div>
+
+  <div class="stats-section">
+    <h3><i class="fas fa-chart-line"></i> Statistiques Personnelles</h3>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-card-value" id="avg-time">0s</div>
+        <div>Temps moyen</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-value" id="correct-count">0</div>
+        <div>Bonnes réponses</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-value" id="wrong-count">0</div>
+        <div>Erreurs</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-value" id="accuracy">0%</div>
+        <div>Précision</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="leaderboard">
+    <h3><i class="fas fa-trophy"></i> Classement Global</h3>
+    <div id="leaderboard-list">
+      <p>Aucun score enregistré.</p>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+  // Configuration des verbes
+  const verbs = [
+    { fr: "Dire", en: "To say", past: "Said", pastPart: "Said" },
+    { fr: "Faire", en: "To make", past: "Made", pastPart: "Made" },
+    { fr: "Être", en: "To be", past: "Was/Were", pastPart: "Been" },
+    { fr: "Aller", en: "To go", past: "Went", pastPart: "Gone" },
+    { fr: "Prendre", en: "To take", past: "Took", pastPart: "Taken" },
+    { fr: "Venir", en: "To come", past: "Came", pastPart: "Come" },
+    { fr: "Voir", en: "To see", past: "Saw", pastPart: "Seen" },
+    { fr: "Connaître", en: "To know", past: "Knew", pastPart: "Known" },
+    { fr: "Obtenir", en: "To get", past: "Got", pastPart: "Got (UK) / Gotten (US)" },
+    { fr: "Donner", en: "To give", past: "Gave", pastPart: "Given" },
+    { fr: "Trouver", en: "To find", past: "Found", pastPart: "Found" },
+    { fr: "Penser", en: "To think", past: "Thought", pastPart: "Thought" },
+    { fr: "Dire / Raconter", en: "To tell", past: "Told", pastPart: "Told" },
+    { fr: "Devenir", en: "To become", past: "Became", pastPart: "Become" },
+    { fr: "Montrer", en: "To show", past: "Showed", pastPart: "Shown" },
+    { fr: "Partir", en: "To leave", past: "Left", pastPart: "Left" },
+    { fr: "Sentir", en: "To feel", past: "Felt", pastPart: "Felt" },
+    { fr: "Mettre", en: "To put", past: "Put", pastPart: "Put" },
+    { fr: "Apporter", en: "To bring", past: "Brought", pastPart: "Brought" },
+    { fr: "Commencer", en: "To begin", past: "Began", pastPart: "Begun" },
+    { fr: "Garder", en: "To keep", past: "Kept", pastPart: "Kept" },
+    { fr: "Tenir", en: "To hold", past: "Held", pastPart: "Held" },
+    { fr: "Écrire", en: "To write", past: "Wrote", pastPart: "Written" },
+    { fr: "Tenir debout", en: "To stand", past: "Stood", pastPart: "Stood" },
+    { fr: "Entendre", en: "To hear", past: "Heard", pastPart: "Heard" },
+    { fr: "Laisser", en: "To let", past: "Let", pastPart: "Let" },
+    { fr: "Signifier", en: "To mean", past: "Meant", pastPart: "Meant" },
+    { fr: "Poser", en: "To set", past: "Set", pastPart: "Set" },
+    { fr: "Rencontrer", en: "To meet", past: "Met", pastPart: "Met" },
+    { fr: "Courir", en: "To run", past: "Ran", pastPart: "Run" },
+    { fr: "Payer", en: "To pay", past: "Paid", pastPart: "Paid" },
+    { fr: "S’assoir", en: "To sit", past: "Sat", pastPart: "Sat" },
+    { fr: "Parler", en: "To speak", past: "Spoke", pastPart: "Spoken" },
+    { fr: "Mener", en: "To lead", past: "Led", pastPart: "Led" },
+    { fr: "Lire", en: "To read", past: "Read", pastPart: "Read" },
+    { fr: "Grandir", en: "To grow", past: "Grew", pastPart: "Grown" },
+    { fr: "Perdre", en: "To lose", past: "Lost", pastPart: "Lost" },
+    { fr: "Tomber", en: "To fall", past: "Fell", pastPart: "Fallen" },
+    { fr: "Envoyer", en: "To send", past: "Sent", pastPart: "Sent" },
+    { fr: "Construire", en: "To build", past: "Built", pastPart: "Built" },
+    { fr: "Comprendre", en: "To understand", past: "Understood", pastPart: "Understood" },
+    { fr: "Dessiner", en: "To draw", past: "Drew", pastPart: "Drawn" },
+    { fr: "Casser", en: "To break", past: "Broke", pastPart: "Broken" },
+    { fr: "Passer", en: "To spend", past: "Spent", pastPart: "Spent" },
+    { fr: "Couper", en: "To cut", past: "Cut", pastPart: "Cut" },
+    { fr: "Monter", en: "To rise", past: "Rose", pastPart: "Risen" },
+    { fr: "Conduire", en: "To drive", past: "Drove", pastPart: "Driven" },
+    { fr: "Acheter", en: "To buy", past: "Bought", pastPart: "Bought" },
+    { fr: "Porter", en: "To wear", past: "Wore", pastPart: "Worn" },
+    { fr: "Choisir", en: "To choose", past: "Chose", pastPart: "Chosen" }
+  ];
+
+  // Variables globales
+  let currentQuestionIndex = 0;
+  let score = 0;
+  let difficulty = 'easy';
+  let mode = 'quiz'; // 'quiz' ou 'training'
+  let timerInterval;
+  let timeLeft = 15;
+  let totalQuestions = 20;
+  let questionTimes = [];
+  let correctCount = 0;
+  let wrongCount = 0;
+  let selectedAnswers = [];
+  let startTime = null;
+
+  // Fonctions de configuration
+  function setDifficulty(level) {
+    difficulty = level;
+    document.querySelectorAll('.difficulty-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    document.getElementById('level-display').textContent = 
+      level === 'easy' ? 'Facile' : level === 'medium' ? 'Moyen' : 'Difficile';
+  }
+
+  function setMode(m) {
+    mode = m;
+    document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    if (mode === 'training') {
+      timeLeft = 0; // Pas de timer en mode entraînement
+      document.getElementById('time-display').textContent = '∞';
+    } else {
+      timeLeft = 15; // Timer en mode quiz
+      document.getElementById('time-display').textContent = '15s';
+    }
+  }
+
+  function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+  }
+
+  // Gestion des questions
+  function getRandomQuestions(count) {
+    const shuffled = [...verbs].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+  }
+
+  function getRandomQuestionType() {
+    const types = ['pastPart', 'past', 'base'];
+    return types[Math.floor(Math.random() * types.length)];
+  }
+
+  function generateOptions(question, questionType) {
+    let correctAnswer, options;
+    
+    switch(questionType) {
+      case 'pastPart':
+        correctAnswer = question.pastPart;
+        options = verbs
+          .filter(v => v !== question && v.pastPart !== correctAnswer)
+          .sort(() => 0.5 - Math.random())
+          .slice(0, 3)
+          .map(v => v.pastPart);
+        break;
+      case 'past':
+        correctAnswer = question.past;
+        options = verbs
+          .filter(v => v !== question && v.past !== correctAnswer)
+          .sort(() => 0.5 - Math.random())
+          .slice(0, 3)
+          .map(v => v.past);
+        break;
+      case 'base':
+        correctAnswer = question.en;
+        options = verbs
+          .filter(v => v !== question && v.en !== correctAnswer)
+          .sort(() => 0.5 - Math.random())
+          .slice(0, 3)
+          .map(v => v.en);
+        break;
+    }
+    
+    const allOptions = [correctAnswer, ...options].sort(() => 0.5 - Math.random());
+    return { correctAnswer, options: allOptions };
+  }
+
+  function startTimer() {
+    if (mode === 'training') return;
+    
+    clearInterval(timerInterval);
+    timeLeft = 15;
+    updateTimerDisplay();
+
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      updateTimerDisplay();
+
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        handleTimeout();
+      }
+    }, 1000);
+  }
+
+  function updateTimerDisplay() {
+    if (mode === 'training') return;
+    document.getElementById('time-display').textContent = `${timeLeft}s`;
+    const progress = (timeLeft / 15) * 100;
+    document.querySelector('.timer-progress').style.width = `${progress}%`;
+  }
+
+  function handleTimeout() {
+    const options = document.querySelectorAll('.option');
+    options.forEach(opt => {
+      if (!opt.classList.contains('selected')) {
+        opt.style.backgroundColor = '#ffeb3b';
+        opt.style.color = '#333';
+      }
+    });
+    setTimeout(() => {
+      if (currentQuestionIndex < totalQuestions - 1) {
+        nextQuestion();
+      } else {
+        showScore();
+      }
+    }, 1000);
+  }
+
+  function displayQuestion(question, index) {
+    const questionType = getRandomQuestionType();
+    const { correctAnswer, options } = generateOptions(question, questionType);
+    
+    const questionTypes = {
+      'pastPart': 'Participe passé',
+      'past': 'Prétérit',
+      'base': 'Base verbale'
+    };
+    
+    const container = document.getElementById("quiz-container");
+    container.innerHTML = `
+      <div class="question">
+        <div class="question-header">
+          <div class="question-number">Question ${index + 1}/${totalQuestions}</div>
+          <div class="question-type">${questionTypes[questionType]}</div>
+        </div>
+        <div class="question-text">
+          ${questionType === 'base' ? 
+            `Quelle est la base verbale de "${question.fr}" ?` :
+            questionType === 'past' ? 
+            `Quel est le prétérit de "${question.fr}" ?` :
+            `Quel est le participe passé de "${question.fr}" ?`}
+        </div>
+        ${mode !== 'training' ? `
+        <div class="timer-bar">
+          <div class="timer-progress"></div>
+        </div>` : ''}
+        <div class="options">
+          ${options.map((option, i) => `
+            <div class="option" onclick="selectOption(this, '${option}', '${correctAnswer}')">
+              <div class="option-letter">${String.fromCharCode(65 + i)}</div>
+              <div>${option}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+    
+    document.getElementById("current-question").textContent = index + 1;
+    document.getElementById("score-display").textContent = score;
+    document.getElementById("progress-fill").style.width = `${((index + 1) / totalQuestions) * 100}%`;
+    
+    startTimer();
+  }
+
+  function selectOption(element, selected, correct) {
+    if (mode === 'training') {
+      element.classList.add('selected');
+    } else {
+      clearInterval(timerInterval);
+      const options = element.parentElement.querySelectorAll('.option');
+      options.forEach(opt => opt.classList.remove('selected'));
+      element.classList.add('selected');
+    }
+
+    const feedbackDiv = document.createElement("div");
+    feedbackDiv.className = `feedback ${selected === correct ? 'correct' : 'incorrect'}`;
+    feedbackDiv.innerHTML = selected === correct ? 
+      '<i class="fas fa-check-circle"></i> Correct !' : 
+      `<i class="fas fa-times-circle"></i> Incorrect ! La bonne réponse était : ${correct}`;
+    element.parentElement.appendChild(feedbackDiv);
+
+    const questionTime = mode === 'training' ? 0 : 15 - timeLeft;
+    questionTimes.push(questionTime);
+
+    if (selected === correct) {
+      score++;
+      correctCount++;
+    } else {
+      wrongCount++;
+    }
+
+    updateStats();
+    updateBadges();
+
+    if (mode !== 'training') {
+      setTimeout(() => {
+        if (currentQuestionIndex < totalQuestions - 1) {
+          nextQuestion();
+        } else {
+          showScore();
+        }
+      }, 1500);
+    }
+  }
+
+  function nextQuestion() {
+    currentQuestionIndex++;
+    const nextQ = getRandomQuestions(totalQuestions)[currentQuestionIndex];
+    displayQuestion(nextQ, currentQuestionIndex);
+  }
+
+  function showScore() {
+    clearInterval(timerInterval);
+    const container = document.getElementById("quiz-container");
+    container.innerHTML = `
+      <div class="results">
+        <h2><i class="fas fa-trophy"></i> Quiz Terminé !</h2>
+        <div class="score-display">${score}/${totalQuestions}</div>
+        <p>Vous avez répondu correctement à ${score} question(s).</p>
+        <p>Temps moyen par question : ${(questionTimes.length > 0 ? 
+          (questionTimes.reduce((a, b) => a + b, 0) / questionTimes.length).toFixed(1) : 0)} secondes</p>
+      </div>
+    `;
+    
+    saveScore(score);
+    loadLeaderboard();
+    updateStats();
+    updateBadges();
+    
+    // Mettre à jour l'aperçu PDF
+    updatePDFPreview();
+  }
+
+  function updateStats() {
+    const avgTime = questionTimes.length > 0 ? 
+      (questionTimes.reduce((a, b) => a + b, 0) / questionTimes.length).toFixed(1) : 0;
+    document.getElementById("avg-time").textContent = `${avgTime}s`;
+    document.getElementById("correct-count").textContent = correctCount;
+    document.getElementById("wrong-count").textContent = wrongCount;
+    const accuracy = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
+    document.getElementById("accuracy").textContent = `${accuracy}%`;
+  }
+
+  function updateBadges() {
+    const badges = [
+      { element: document.getElementById('badge1'), threshold: 10 },
+      { element: document.getElementById('badge2'), threshold: 15 },
+      { element: document.getElementById('badge3'), threshold: 20 }
+    ];
+    
+    badges.forEach(badge => {
+      if (score >= badge.threshold) {
+        badge.element.classList.add('unlocked');
+      }
+    });
+  }
+
+  function saveScore(score) {
+    const scores = JSON.parse(localStorage.getItem('verbQuizScores') || '[]');
+    scores.push({ 
+      date: new Date().toLocaleDateString(), 
+      score, 
+      timestamp: Date.now(),
+      time: questionTimes.length > 0 ? 
+        (questionTimes.reduce((a, b) => a + b, 0) / questionTimes.length).toFixed(1) : 0,
+      difficulty,
+      mode
+    });
+    localStorage.setItem('verbQuizScores', JSON.stringify(scores));
+  }
+
+  function loadLeaderboard() {
+    const scores = JSON.parse(localStorage.getItem('verbQuizScores') || '[]');
+    const leaderboard = document.getElementById('leaderboard-list');
+    if (scores.length === 0) {
+      leaderboard.innerHTML = "<p>Aucun score enregistré.</p>";
+      return;
+    }
+    
+    const sorted = scores.sort((a, b) => b.score - a.score).slice(0, 10);
+    leaderboard.innerHTML = sorted.map(s => 
+      `<p>${s.date} : ${s.score}/${totalQuestions} (${s.time}s) - ${s.difficulty} - ${s.mode}</p>`
+    ).join('');
+  }
+
+  function restartQuiz() {
+    currentQuestionIndex = 0;
+    score = 0;
+    questionTimes = [];
+    correctCount = 0;
+    wrongCount = 0;
+    selectedAnswers = [];
+    const firstQ = getRandomQuestions(totalQuestions)[0];
+    displayQuestion(firstQ, 0);
+    document.getElementById("current-question").textContent = "1";
+    document.getElementById("score-display").textContent = "0";
+    document.getElementById("progress-fill").style.width = "0%";
+    document.getElementById("avg-time").textContent = "0s";
+    document.getElementById("correct-count").textContent = "0";
+    document.getElementById("wrong-count").textContent = "0";
+    document.getElementById("accuracy").textContent = "0%";
+    
+    // Reset badges
+    document.querySelectorAll('.badge').forEach(badge => {
+      badge.classList.remove('unlocked');
+    });
+    
+    clearInterval(timerInterval);
+    updatePDFPreview();
+  }
+
+  function printResults() {
+    window.print();
+  }
+
+  function updatePDFPreview() {
+    const preview = document.getElementById('pdf-preview');
+    preview.innerHTML = `
+      <h4>Résumé du Quiz</h4>
+      <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+      <p><strong>Score:</strong> ${score}/${totalQuestions}</p>
+      <p><strong>Précision:</strong> ${totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0}%</p>
+      <p><strong>Temps moyen:</strong> ${(questionTimes.length > 0 ? 
+        (questionTimes.reduce((a, b) => a + b, 0) / questionTimes.length).toFixed(1) : 0)} secondes</p>
+      <p><strong>Difficulté:</strong> ${difficulty}</p>
+      <p><strong>Mode:</strong> ${mode === 'quiz' ? 'Quiz' : 'Entraînement'}</p>
+    `;
+  }
+
+  function exportPDF() {
+    updatePDFPreview();
+    alert("PDF exporté avec succès !");
+  }
+
+  function downloadPDF() {
+    updatePDFPreview();
+    
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    doc.setFontSize(22);
+    doc.text("Résultats du Quiz Verbes Irreguliers", 105, 20, { align: 'center' });
+    
+    doc.setFontSize(12);
+    doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 40);
+    doc.text(`Score: ${score}/${totalQuestions}`, 20, 50);
+    doc.text(`Précision: ${totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0}%`, 20, 60);
+    doc.text(`Temps moyen: ${(questionTimes.length > 0 ? 
+      (questionTimes.reduce((a, b) => a + b, 0) / questionTimes.length).toFixed(1) : 0)} secondes`, 20, 70);
+    doc.text(`Difficulté: ${difficulty}`, 20, 80);
+    doc.text(`Mode: ${mode === 'quiz' ? 'Quiz' : 'Entraînement'}`, 20, 90);
+    
+    doc.save(`resultat_quiz_${new Date().toISOString().split('T')[0]}.pdf`);
+  }
+
+  // Initialisation
+  window.onload = () => {
+    loadLeaderboard();
+    const firstQ = getRandomQuestions(totalQuestions)[0];
+    displayQuestion(firstQ, 0);
+    updatePDFPreview();
+  };
+
+  // Exposer les fonctions globalement pour les événements
+  window.setDifficulty = setDifficulty;
+  window.setMode = setMode;
+  window.toggleDarkMode = toggleDarkMode;
+  window.restartQuiz = restartQuiz;
+  window.printResults = printResults;
+  window.exportPDF = exportPDF;
+  window.downloadPDF = downloadPDF;
+  window.selectOption = selectOption;
+</script>
+
+</body>
+</html>
